@@ -1,4 +1,4 @@
-import {addTodo, toggleTodo, deleteTodo, filterTodos} from '../src/todoLogic';
+import {addTodo, toggleTodo,editTodo, deleteTodo, filterTodos} from '../src/todoLogic';
 
 describe('todoLogic', () => {
   test('ajoute une tâche', () => {
@@ -31,4 +31,15 @@ describe('todoLogic', () => {
     expect(filterTodos(todos, 'done')).toHaveLength(1);
     expect(filterTodos(todos, 'active')).toHaveLength(1);
   });
+    test('modifie le titre', () => {
+      const [t] = addTodo([], 'Ancien');
+      const r = editTodo([t], t.id, '  Nouveau  ');
+      expect(r[0].title).toBe('Nouveau');
+    });
+
+    test('refuse un titre modifié vide', () => {
+      const [t] = addTodo([], 'Ancien');
+      expect(editTodo([t], t.id, '   ')[0].title).toBe('Ancien');
+    });
+
 });

@@ -1,3 +1,4 @@
-module.exports = {
-  preset: '@react-native/jest-preset',
-};
+   module.exports = {
+     preset: '@react-native/jest-preset',
+     coverageReporters: ['cobertura', 'lcov', 'text'],
+   };

@@ -14,7 +14,13 @@ export function addTodo(todos, title) {
 export function toggleTodo(todos, id) {
   return todos.map(t => (t.id === id ? {...t, done: !t.done} : t));
 }
-
+export function editTodo(todos, id, newTitle) {
+  const clean = (newTitle || '').trim();
+  if (!clean) {
+    return todos;
+  }
+  return todos.map(t => (t.id === id ? {...t, title: clean} : t));
+}
 export function deleteTodo(todos, id) {
   return todos.filter(t => t.id !== id);
 }
