@@ -1,6 +1,5 @@
 import React, {useState, useMemo} from 'react';
 import {
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
@@ -9,9 +8,15 @@ import {
   View,
   FlatList,
 } from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import TodoItem from './src/components/TodoItem';
-import {addTodo, toggleTodo, deleteTodo, filterTodos} from './src/todoLogic';
-
+import {
+  addTodo,
+  toggleTodo,
+  editTodo,
+  deleteTodo,
+  filterTodos,
+} from './src/todoLogic';
 const FILTERS = [
   {key: 'all', label: 'Toutes'},
   {key: 'active', label: 'À faire'},
@@ -88,6 +93,7 @@ export default function App() {
           <TodoItem
             todo={item}
             onToggle={() => setTodos(c => toggleTodo(c, item.id))}
+            onEdit={newTitle => setTodos(c => editTodo(c, item.id, newTitle))}
             onDelete={() => setTodos(c => deleteTodo(c, item.id))}
           />
         )}
