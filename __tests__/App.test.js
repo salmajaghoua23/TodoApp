@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text} from 'react-native';
+import { Text } from 'react-native';
 import ReactTestRenderer from 'react-test-renderer';
 import App from '../App';
 
@@ -24,11 +24,11 @@ test('ajoute une tâche via le champ de saisie', async () => {
   await ReactTestRenderer.act(() => {
     renderer = ReactTestRenderer.create(<App />);
   });
-  const input = renderer.root.findByProps({testID: 'todo-input'});
+  const input = renderer.root.findByProps({ testID: 'todo-input' });
   await ReactTestRenderer.act(() => {
     input.props.onChangeText('Ma première tâche');
   });
-  const button = renderer.root.findByProps({testID: 'add-button'});
+  const button = renderer.root.findByProps({ testID: 'add-button' });
   await ReactTestRenderer.act(() => {
     button.props.onPress();
   });
