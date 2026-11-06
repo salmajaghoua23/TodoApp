@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   StatusBar,
   StyleSheet,
@@ -30,7 +31,7 @@ const FILTERS = [
   { key: 'active', label: 'À faire' },
   { key: 'done', label: 'Terminées' },
 ];
-
+const STORAGE_KEY = 'todos';
 export default function App() {
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
@@ -38,7 +39,26 @@ export default function App() {
   const [priority, setPriority] = useState('medium');
   const [dueDate, setDueDate] = useState('');
   const [screen, setScreen] = useState('home');
+  const [loaded, setLoaded] = useState(false);
 
+  // Charger les tâches au démarrage
+  useEffect(() => {
+    AsyncStorage.getItem(STORAGE_KEY)
+      .then(value => {
+        if (value) {
+          setTodos(JSON.parse(value));
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoaded(true));
+  }, []);
+
+  // Sauvegarder à chaque changement (seulement après le chargement)
+  useEffect(() => {
+    if (loaded) {
+      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todos)).catch(() => {});
+    }
+  }, [todos, loaded]);
   // Filtrer et trier les tâches
   const visibleTodos = useMemo(
     () => sortTodos(filterTodos(todos, filter)),
