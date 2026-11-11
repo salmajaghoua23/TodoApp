@@ -1,6 +1,4 @@
-import React, {useState, useMemo} from 'react';
-import {
-  SafeAreaView,
+import React, {useState, useMemo, useEffect} from 'react';import {
   StatusBar,
   StyleSheet,
   Text,
@@ -8,10 +6,18 @@ import {
   TouchableOpacity,
   View,
   FlatList,
+  Alert,
 } from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import TodoItem from './src/components/TodoItem';
-import {addTodo, toggleTodo, deleteTodo, filterTodos} from './src/todoLogic';
-
+import {
+  addTodo,
+  toggleTodo,
+  editTodo,
+  deleteTodo,
+  filterTodos,
+} from './src/todoLogic';
+import {loadTodos, saveTodos} from './src/storage';
 const FILTERS = [
   {key: 'all', label: 'Toutes'},
   {key: 'active', label: 'À faire'},
@@ -22,10 +28,42 @@ export default function App() {
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
   const [filter, setFilter] = useState('all');
+  const [loaded, setLoaded] = useState(false);
 
+    useEffect(() => {
+      let active = true;
+      loadTodos().then(saved => {
+        if (active) {
+          setTodos(saved);
+          setLoaded(true);
+        }
+      });
+      return () => {
+        active = false;
+      };
+    }, []);
+
+    useEffect(() => {
+      if (loaded) {
+        saveTodos(todos);
+      }
+    }, [todos, loaded]);
   const visibleTodos = useMemo(() => filterTodos(todos, filter), [todos, filter]);
   const remaining = todos.filter(t => !t.done).length;
-
+  const confirmDelete = todo => {
+      Alert.alert(
+        'Supprimer la tâche',
+        `Voulez-vous vraiment supprimer « ${todo.title} » ?`,
+        [
+          {text: 'Annuler', style: 'cancel'},
+          {
+            text: 'Supprimer',
+            style: 'destructive',
+            onPress: () => setTodos(c => deleteTodo(c, todo.id)),
+          },
+        ],
+      );
+  };
   const handleAdd = () => {
     setTodos(current => addTodo(current, text));
     setText('');
@@ -88,7 +126,8 @@ export default function App() {
           <TodoItem
             todo={item}
             onToggle={() => setTodos(c => toggleTodo(c, item.id))}
-            onDelete={() => setTodos(c => deleteTodo(c, item.id))}
+            onEdit={newTitle => setTodos(c => editTodo(c, item.id, newTitle))}
+            onDelete={() => confirmDelete(item)}
           />
         )}
       />
