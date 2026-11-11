@@ -1,6 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
+import React, {useState, useMemo, useEffect} from 'react';import {
   StatusBar,
   StyleSheet,
   Text,
@@ -8,102 +6,79 @@ import {
   TouchableOpacity,
   View,
   FlatList,
+  Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
+import {SafeAreaView} from 'react-native-safe-area-context';
 import TodoItem from './src/components/TodoItem';
-import PrioritySelector from './src/components/PrioritySelector';
-import DueDateSelector from './src/components/DueDateSelector';
-import StatsScreen from './src/screens/StatsScreen';
-
 import {
   addTodo,
   toggleTodo,
   editTodo,
   deleteTodo,
   filterTodos,
-  sortTodos,
-  getStats,
 } from './src/todoLogic';
-
+import {loadTodos, saveTodos} from './src/storage';
 const FILTERS = [
-  { key: 'all', label: 'Toutes' },
-  { key: 'active', label: 'À faire' },
-  { key: 'done', label: 'Terminées' },
+  {key: 'all', label: 'Toutes'},
+  {key: 'active', label: 'À faire'},
+  {key: 'done', label: 'Terminées'},
 ];
-const STORAGE_KEY = 'todos';
+
 export default function App() {
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
   const [filter, setFilter] = useState('all');
-  const [priority, setPriority] = useState('medium');
-  const [dueDate, setDueDate] = useState('');
-  const [screen, setScreen] = useState('home');
   const [loaded, setLoaded] = useState(false);
 
-  // Charger les tâches au démarrage
-  useEffect(() => {
-    AsyncStorage.getItem(STORAGE_KEY)
-      .then(value => {
-        if (value) {
-          setTodos(JSON.parse(value));
+    useEffect(() => {
+      let active = true;
+      loadTodos().then(saved => {
+        if (active) {
+          setTodos(saved);
+          setLoaded(true);
         }
-      })
-      .catch(() => {})
-      .finally(() => setLoaded(true));
-  }, []);
+      });
+      return () => {
+        active = false;
+      };
+    }, []);
 
-  // Sauvegarder à chaque changement (seulement après le chargement)
-  useEffect(() => {
-    if (loaded) {
-      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todos)).catch(() => {});
-    }
-  }, [todos, loaded]);
-  // Filtrer et trier les tâches
-  const visibleTodos = useMemo(
-    () => sortTodos(filterTodos(todos, filter)),
-    [todos, filter],
-  );
-
-  // Calculer les statistiques
-  const stats = useMemo(() => getStats(todos), [todos]);
-  const remaining = stats.active;
-
-  // Ajouter une nouvelle tâche
-  const handleAdd = () => {
-    if (!text.trim()) {
-      return;
-    }
-
-    setTodos(current => addTodo(current, text, { priority, dueDate }));
-
-    setText('');
-    setDueDate('');
+    useEffect(() => {
+      if (loaded) {
+        saveTodos(todos);
+      }
+    }, [todos, loaded]);
+  const visibleTodos = useMemo(() => filterTodos(todos, filter), [todos, filter]);
+  const remaining = todos.filter(t => !t.done).length;
+  const confirmDelete = todo => {
+      Alert.alert(
+        'Supprimer la tâche',
+        `Voulez-vous vraiment supprimer « ${todo.title} » ?`,
+        [
+          {text: 'Annuler', style: 'cancel'},
+          {
+            text: 'Supprimer',
+            style: 'destructive',
+            onPress: () => setTodos(c => deleteTodo(c, todo.id)),
+          },
+        ],
+      );
   };
-  // Écran Statistiques
-  if (screen === 'stats') {
-    return (
-      <StatsScreen
-        todos={todos}
-        stats={stats}
-        onBack={() => setScreen('home')}
-      />
-    );
-  }
+  const handleAdd = () => {
+    setTodos(current => addTodo(current, text));
+    setText('');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#4f46e5" />
-
-      {/* En-tête */}
       <View style={styles.header}>
         <Text style={styles.title}>Ma Todo List</Text>
-
         <Text style={styles.subtitle} testID="counter">
           {remaining} tâche(s) restante(s)
         </Text>
       </View>
 
-      {/* Champ de saisie et bouton Ajouter */}
       <View style={styles.inputRow}>
         <TextInput
           testID="todo-input"
@@ -114,54 +89,32 @@ export default function App() {
           onSubmitEditing={handleAdd}
           returnKeyType="done"
         />
-
         <TouchableOpacity
           testID="add-button"
           style={styles.addButton}
-          onPress={handleAdd}
-        >
+          onPress={handleAdd}>
           <Text style={styles.addButtonText}>Ajouter</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Options : priorité et date limite */}
-      <View style={styles.options}>
-        <PrioritySelector value={priority} onChange={setPriority} />
-
-        <DueDateSelector value={dueDate} onChange={setDueDate} />
-      </View>
-
-      {/* Filtres des tâches */}
       <View style={styles.filters}>
         {FILTERS.map(f => (
           <TouchableOpacity
             key={f.key}
             testID={`filter-${f.key}`}
             style={[styles.filterBtn, filter === f.key && styles.filterActive]}
-            onPress={() => setFilter(f.key)}
-          >
+            onPress={() => setFilter(f.key)}>
             <Text
               style={[
                 styles.filterText,
                 filter === f.key && styles.filterTextActive,
-              ]}
-            >
+              ]}>
               {f.label}
             </Text>
           </TouchableOpacity>
         ))}
       </View>
 
-      {/* Bouton qui ouvre l'écran des statistiques */}
-      <TouchableOpacity
-        testID="stats-toggle"
-        style={styles.statsButton}
-        onPress={() => setScreen('stats')}
-      >
-        <Text style={styles.filterText}>Statistiques</Text>
-      </TouchableOpacity>
-
-      {/* Liste des tâches */}
       <FlatList
         data={visibleTodos}
         keyExtractor={item => item.id}
@@ -169,14 +122,12 @@ export default function App() {
         ListEmptyComponent={
           <Text style={styles.empty}>Aucune tâche pour le moment.</Text>
         }
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <TodoItem
             todo={item}
-            onToggle={() => setTodos(current => toggleTodo(current, item.id))}
-            onEdit={newTitle =>
-              setTodos(current => editTodo(current, item.id, newTitle))
-            }
-            onDelete={() => setTodos(current => deleteTodo(current, item.id))}
+            onToggle={() => setTodos(c => toggleTodo(c, item.id))}
+            onEdit={newTitle => setTodos(c => editTodo(c, item.id, newTitle))}
+            onDelete={() => confirmDelete(item)}
           />
         )}
       />
@@ -184,35 +135,12 @@ export default function App() {
   );
 }
 
-// Styles de l'application
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f3f4f6',
-  },
-
-  header: {
-    backgroundColor: '#4f46e5',
-    padding: 20,
-    paddingTop: 28,
-  },
-
-  title: {
-    color: '#fff',
-    fontSize: 26,
-    fontWeight: 'bold',
-  },
-
-  subtitle: {
-    color: '#c7d2fe',
-    marginTop: 4,
-  },
-
-  inputRow: {
-    flexDirection: 'row',
-    padding: 16,
-  },
-
+  container: {flex: 1, backgroundColor: '#f3f4f6'},
+  header: {backgroundColor: '#4f46e5', padding: 20, paddingTop: 28},
+  title: {color: '#fff', fontSize: 26, fontWeight: 'bold'},
+  subtitle: {color: '#c7d2fe', marginTop: 4},
+  inputRow: {flexDirection: 'row', padding: 16},
   input: {
     flex: 1,
     backgroundColor: '#fff',
@@ -222,7 +150,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e5e7eb',
   },
-
   addButton: {
     backgroundColor: '#4f46e5',
     borderRadius: 10,
@@ -230,29 +157,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: 10,
   },
-
-  addButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-
-  options: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 8,
-    paddingHorizontal: 16,
-    marginBottom: 10,
-  },
-
-  filters: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    marginBottom: 8,
-  },
-
+  addButtonText: {color: '#fff', fontWeight: 'bold'},
+  filters: {flexDirection: 'row', justifyContent: 'center', marginBottom: 8},
   filterBtn: {
     paddingVertical: 6,
     paddingHorizontal: 14,
@@ -260,38 +166,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     backgroundColor: '#e5e7eb',
   },
-
-  filterActive: {
-    backgroundColor: '#4f46e5',
-  },
-
-  filterText: {
-    color: '#374151',
-  },
-
-  filterTextActive: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-
-  // Style spécifique du bouton Statistiques
-  statsButton: {
-    alignSelf: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 18,
-    borderRadius: 16,
-    backgroundColor: '#e5e7eb',
-    marginBottom: 10,
-  },
-
-  list: {
-    paddingHorizontal: 16,
-    paddingBottom: 24,
-  },
-
-  empty: {
-    textAlign: 'center',
-    color: '#9ca3af',
-    marginTop: 40,
-  },
+  filterActive: {backgroundColor: '#4f46e5'},
+  filterText: {color: '#374151'},
+  filterTextActive: {color: '#fff', fontWeight: 'bold'},
+  list: {paddingHorizontal: 16, paddingBottom: 24},
+  empty: {textAlign: 'center', color: '#9ca3af', marginTop: 40},
 });
