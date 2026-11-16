@@ -37,13 +37,6 @@ export default function AuthScreen() {
       setBusy(false);
     }
   };
-
-  const google = () =>
-    Alert.alert(
-      'Google Sign-In',
-      'Pas encore activé. Il faudrait configurer le provider Google dans Supabase (Authentication > Providers) + un lien de retour (deep link) dans l\'app.',
-    );
-
   return (
     <Screen bg="#fff">
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -71,12 +64,6 @@ export default function AuthScreen() {
 
           <Button title={isLogin ? 'Sign In' : 'Sign Up'} onPress={submit} loading={busy} style={{ width: '100%', marginTop: 22 }} />
 
-          <View style={styles.orRow}>
-            <View style={styles.line} /><Text style={styles.or}>or</Text><View style={styles.line} />
-          </View>
-
-          <Button variant="light" title="Continue with Google" left="G" onPress={google} style={{ width: '100%' }} />
-
           <View style={{ flexDirection: 'row', marginTop: 26 }}>
             <Text style={{ color: colors.text }}>{isLogin ? "Don't have an account? " : 'Already have an account? '}</Text>
             <TouchableOpacity onPress={() => { setMode(isLogin ? 'signup' : 'login'); setError(''); }}>
@@ -96,7 +83,5 @@ const styles = StyleSheet.create({
   title: { fontSize: 28, fontWeight: '800', color: colors.text, marginTop: 20 },
   sub: { fontSize: 15, color: colors.muted, marginTop: 6 },
   error: { color: colors.danger, marginTop: 14, fontWeight: '600', textAlign: 'center' },
-  orRow: { flexDirection: 'row', alignItems: 'center', width: '100%', marginVertical: 18 },
-  line: { flex: 1, height: 1, backgroundColor: colors.border },
-  or: { marginHorizontal: 12, color: colors.muted },
+
 });
