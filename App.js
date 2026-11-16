@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   StatusBar,
   StyleSheet,
@@ -24,6 +24,7 @@ import {
   sortTodos,
   getStats,
 } from './src/todoLogic';
+import { loadTodos, saveTodos } from './src/storage';
 
 const FILTERS = [
   { key: 'all', label: 'Toutes' },
@@ -38,6 +39,28 @@ export default function App() {
   const [priority, setPriority] = useState('medium');
   const [dueDate, setDueDate] = useState('');
   const [screen, setScreen] = useState('home');
+  const [loaded, setLoaded] = useState(false);
+
+  // Charger les tâches sauvegardées au démarrage
+  useEffect(() => {
+    let active = true;
+    loadTodos().then(saved => {
+      if (active) {
+        setTodos(saved);
+        setLoaded(true);
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // Sauvegarder à chaque modification (seulement après le chargement initial)
+  useEffect(() => {
+    if (loaded) {
+      saveTodos(todos);
+    }
+  }, [todos, loaded]);
 
   // Filtrer et trier les tâches
   const visibleTodos = useMemo(
