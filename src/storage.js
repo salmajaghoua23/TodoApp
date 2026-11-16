@@ -1,19 +1,31 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const STORAGE_KEY = '@todoapp/todos';
+export const KEYS = {
+  onboarded: '@todov2/onboarded',
+  prefs: id => `@todov2/prefs/${id}`,
+};
 
-export async function loadTodos() {
+export async function load(key, fallback) {
   try {
-    const raw = await AsyncStorage.getItem(STORAGE_KEY);
-    const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
+    const raw = await AsyncStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
   } catch (e) {
-    return [];
+    return fallback;
   }
 }
 
-export async function saveTodos(todos) {
+export async function save(key, value) {
   try {
-    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
-  } catch (e) {}
+    await AsyncStorage.setItem(key, JSON.stringify(value));
+  } catch (e) {
+    // ignore
+  }
+}
+
+export async function remove(key) {
+  try {
+    await AsyncStorage.removeItem(key);
+  } catch (e) {
+    // ignore
+  }
 }
