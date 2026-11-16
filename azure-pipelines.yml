@@ -44,7 +44,7 @@ stages:
             fetchDepth: 0
 
           # 2. Installer Node.js
-          - task: NodeTool@0
+          - task: UseNode@1
             displayName: 'Installer Node.js 22'
             inputs:
               versionSpec: '$(NODE_VERSION)'
