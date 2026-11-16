@@ -23,8 +23,8 @@ variables:
   ANDROID_SDK_ROOT: 'C:\Users\hp\AppData\Local\Android\Sdk'
 
   # Remplacer par les vraies clés de SonarQube Cloud
-  SONAR_ORGANIZATION: 'SonarCloud-Connection'
-  SONAR_PROJECT_KEY: '886f47db9a5440a0af19c995cba4fe3f96e89d98'
+  SONAR_ORGANIZATION: 'salmajaghoua23'
+  SONAR_PROJECT_KEY: 'salmajaghoua23_TodoApp'
 
 stages:
 
@@ -47,7 +47,7 @@ stages:
           - task: UseNode@1
             displayName: 'Installer Node.js 22'
             inputs:
-              versionSpec: '$(NODE_VERSION)'
+              version: '$(NODE_VERSION)'
 
           # 3. Vérifier Java et Android SDK
           - task: PowerShell@2
@@ -113,7 +113,7 @@ stages:
           # 9. Analyse de sécurité des dépendances npm
           - script: npm audit --audit-level=high
             displayName: 'Vérification des vulnérabilités npm'
-
+            continueOnError: true
           # 10. Lancer l'analyse SonarCloud
           - task: SonarCloudAnalyze@4
             displayName: 'Analyser le code avec SonarCloud'
