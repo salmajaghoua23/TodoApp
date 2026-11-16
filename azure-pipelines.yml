@@ -4,6 +4,7 @@ trigger:
     include:
       - main
       - develop
+      - feature/*
 
 # 2. Validation des Pull Requests
 pr:
@@ -11,6 +12,7 @@ pr:
     include:
       - main
       - develop
+      - feature/*
 
 # 3. Agent personnel Windows
 pool:
@@ -25,6 +27,10 @@ variables:
   # Remplacer par les vraies clés de SonarQube Cloud
   SONAR_ORGANIZATION: 'salmajaghoua23'
   SONAR_PROJECT_KEY: 'salmajaghoua23_TodoApp'
+
+  # Supabase : URL du projet + clé PUBLIQUE (anon / publishable). Jamais la clé secret/service_role.
+  SUPABASE_URL: 'https://wjzpfxzcylrokauevxly.supabase.co'
+  SUPABASE_KEY: 'sb_publishable__tS71L9cNzwtqZCFSSW6zg_WcLczXeg'
 
 stages:
 
@@ -102,6 +108,15 @@ stages:
               --coverageReporters=lcov
             displayName: 'Exécuter les tests Jest'
 
+          # 7b. Publier les résultats des tests (junit.xml généré par jest-junit)
+          - task: PublishTestResults@2
+            displayName: 'Publier les résultats des tests'
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: 'coverage/junit.xml'
+              failTaskOnFailedTests: true
+            condition: succeededOrFailed()
+
           # 8. Publier le rapport de couverture
           - task: PublishCodeCoverageResults@2
             displayName: 'Publier couverture des tests'
@@ -125,6 +140,32 @@ stages:
             displayName: 'Publier le Quality Gate'
             inputs:
               pollingTimeoutSec: '300'
+
+          # 11b. Injecter la config Supabase avant la compilation
+          - task: PowerShell@2
+            displayName: 'Générer src/v2/config.js (Supabase)'
+            env:
+              SUPABASE_URL: $(SUPABASE_URL)
+              SUPABASE_KEY: $(SUPABASE_KEY)
+            inputs:
+              targetType: 'inline'
+              script: |
+                if (-not $env:SUPABASE_URL -or $env:SUPABASE_URL -like 'YOUR-*' -or $env:SUPABASE_URL -like '*YOUR-PROJECT-REF*') {
+                  throw "SUPABASE_URL non renseigne dans la section variables du YAML"
+                }
+                if (-not $env:SUPABASE_KEY -or $env:SUPABASE_KEY -like 'YOUR-*') {
+                  throw "SUPABASE_KEY non renseignee dans la section variables du YAML"
+                }
+                $content = @"
+                export const SUPABASE_URL = '$($env:SUPABASE_URL)';
+                export const SUPABASE_KEY = '$($env:SUPABASE_KEY)';
+                export const isConfigured = true;
+                "@
+                [System.IO.File]::WriteAllText(
+                  "$(Build.SourcesDirectory)\src\v2\config.js",
+                  $content,
+                  [System.Text.UTF8Encoding]::new($false)
+                )
 
           # 12. Compiler APK et AAB avec Gradle
           - task: PowerShell@2
@@ -200,5 +241,3 @@ stages:
               versionOption: 'custom'
               versionPublish: '1.0.$(Build.BuildId)'
               packagePublishDescription: 'TodoApp Android App Bundle'
-
-
