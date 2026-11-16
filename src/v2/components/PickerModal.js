@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, Pressable, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { colors } from '../theme';
 
 export default function PickerModal({ visible, title, options, selected, onSelect, onClose }) {
