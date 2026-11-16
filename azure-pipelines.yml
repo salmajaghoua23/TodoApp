@@ -174,3 +174,31 @@ stages:
               targetPath: '$(Build.SourcesDirectory)\android\app\build\outputs\bundle\release'
               artifact: 'TodoApp-AAB'
               publishLocation: 'pipeline'
+
+          # 15. Publier APK dans Azure Artifacts Feed
+          - task: UniversalPackages@0
+            displayName: 'Publier APK dans Azure Artifacts'
+            inputs:
+              command: 'publish'
+              publishDirectory: '$(Build.SourcesDirectory)\android\app\build\outputs\apk\release'
+              feedsToUsePublish: 'internal'
+              vstsFeedPublish: 'cloud todoapp/TodoAppFeed'
+              vstsFeedPackagePublish: 'todoapp-apk'
+              versionOption: 'custom'
+              versionPublish: '1.0.$(Build.BuildId)'
+              packagePublishDescription: 'TodoApp Android APK'
+
+          # 16. Publier AAB dans Azure Artifacts Feed
+          - task: UniversalPackages@0
+            displayName: 'Publier AAB dans Azure Artifacts'
+            inputs:
+              command: 'publish'
+              publishDirectory: '$(Build.SourcesDirectory)\android\app\build\outputs\bundle\release'
+              feedsToUsePublish: 'internal'
+              vstsFeedPublish: 'cloud todoapp/TodoAppFeed'
+              vstsFeedPackagePublish: 'todoapp-aab'
+              versionOption: 'custom'
+              versionPublish: '1.0.$(Build.BuildId)'
+              packagePublishDescription: 'TodoApp Android App Bundle'
+
+
