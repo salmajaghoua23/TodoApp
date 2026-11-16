@@ -87,7 +87,8 @@ export default function StatsScreen({ todos, stats, onBack }) {
               <View
                 style={[
                   styles.stackPart,
-                  { flex: stats.done, backgroundColor: '#16a34a' },
+                  styles.barGreen,
+                  { flex: stats.done },
                 ]}
               />
             )}
@@ -95,17 +96,13 @@ export default function StatsScreen({ todos, stats, onBack }) {
               <View
                 style={[
                   styles.stackPart,
-                  { flex: stats.active, backgroundColor: '#4f46e5' },
+                  styles.barIndigo,
+                  { flex: stats.active },
                 ]}
               />
             )}
             {stats.total === 0 && (
-              <View
-                style={[
-                  styles.stackPart,
-                  { flex: 1, backgroundColor: '#e5e7eb' },
-                ]}
-              />
+              <View style={[styles.stackPart, styles.barTrack]} />
             )}
           </View>
           <Text style={styles.legend}>
@@ -148,5 +145,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   stackPart: { height: 18 },
+  barGreen: { backgroundColor: '#16a34a' },
+  barIndigo: { backgroundColor: '#4f46e5' },
+  barTrack: { flex: 1, backgroundColor: '#e5e7eb' },
   legend: { color: '#374151', marginTop: 8 },
 });
