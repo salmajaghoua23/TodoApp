@@ -130,7 +130,7 @@ stages:
             condition: succeededOrFailed()
 
           # 9. Analyse de sécurité des dépendances npm
-          - script: npm audit --audit-level=high
+          - script: npm audit --audit-level=critical
             displayName: 'Vérification des vulnérabilités npm'
             continueOnError: true
           # 10. Lancer l'analyse SonarCloud

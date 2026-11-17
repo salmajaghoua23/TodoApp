@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -63,10 +62,7 @@ export default function AddTaskScreen({ params }) {
   return (
     <Screen bg="#fff">
       <Header title={editing ? 'Edit Task' : 'Add Task'} onBack={nav.goBack} />
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
         <ScrollView
           contentContainerStyle={{ padding: 20 }}
           keyboardShouldPersistTaps="handled"
