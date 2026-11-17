@@ -18,10 +18,24 @@ export default function SettingsScreen() {
     <Screen bg="#fff">
       <Header title="Settings" onBack={nav.goBack} />
       <ScrollView contentContainerStyle={{ padding: 20, gap: 14 }}>
-        <Text style={{ fontWeight: '800', fontSize: 16, color: colors.text }}>Profile</Text>
-        <Field icon="user" value={name} onChangeText={setName} placeholder="Full name" />
-        <Field icon="mail" value={user.email} editable={false} style={{ opacity: 0.6 }} />
+        <Text style={{ fontWeight: '800', fontSize: 16, color: colors.text }}>
+          Profile
+        </Text>
+        <Field
+          testID="settings-name"
+          icon="user"
+          value={name}
+          onChangeText={setName}
+          placeholder="Full name"
+        />
+        <Field
+          icon="mail"
+          value={user.email}
+          editable={false}
+          style={{ opacity: 0.6 }}
+        />
         <Button
+          testID="settings-save"
           title="Save name"
           onPress={async () => {
             try {
@@ -33,8 +47,11 @@ export default function SettingsScreen() {
           }}
         />
         <View style={{ height: 10 }} />
-        <Text style={{ fontWeight: '800', fontSize: 16, color: colors.text }}>Data</Text>
+        <Text style={{ fontWeight: '800', fontSize: 16, color: colors.text }}>
+          Data
+        </Text>
         <Button
+          testID="settings-clear"
           variant="danger"
           title={`Clear completed tasks (${stats.done})`}
           disabled={stats.done === 0}

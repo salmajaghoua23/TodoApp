@@ -12,7 +12,6 @@ pr:
     include:
       - main
       - develop
-      - feature/*
 
 # 3. Agent personnel Windows
 pool:
@@ -79,6 +78,7 @@ stages:
 
           # 4. Préparer l'analyse SonarQube Cloud
           - task: SonarCloudPrepare@4
+            condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
             displayName: 'Préparer analyse SonarCloud'
             inputs:
               SonarCloud: 'SonarCloud-Connection'
@@ -89,9 +89,9 @@ stages:
               cliProjectName: 'TodoApp'
               cliSources: '.'
               extraProperties: |
-                sonar.exclusions=**/node_modules/**,**/android/**,**/ios/**,**/coverage/**,**/*.test.js,**/*.spec.js,**/__tests__/**
+                sonar.exclusions=**/node_modules/**,**/android/**,**/ios/**,**/coverage/**,**/*.test.js,**/*.spec.js,**/__tests__/**,**/test-utils/**,**/*.sql
+                sonar.coverage.exclusions=**/supabase.js,**/config.js
                 sonar.javascript.lcov.reportPaths=coverage/lcov.info
-
           # 5. Installer les dépendances npm
           - script: npm ci
             displayName: 'Installer les dépendances npm'
@@ -131,6 +131,7 @@ stages:
             continueOnError: true
           # 10. Lancer l'analyse SonarCloud
           - task: SonarCloudAnalyze@4
+            condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
             displayName: 'Analyser le code avec SonarCloud'
             inputs:
               jdkversion: 'JAVA_HOME_17_X64'
@@ -138,6 +139,8 @@ stages:
           # 11. Publier le résultat du Quality Gate
           - task: SonarCloudPublish@4
             displayName: 'Publier le Quality Gate'
+            condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+            continueOnError: true
             inputs:
               pollingTimeoutSec: '300'
 
@@ -211,6 +214,7 @@ stages:
           # 14. Publier AAB dans Azure Pipelines Artifacts
           - task: PublishPipelineArtifact@1
             displayName: 'Publier AAB'
+            condition: and(succeeded(), in(variables['Build.SourceBranch'], 'refs/heads/main', 'refs/heads/develop'))
             inputs:
               targetPath: '$(Build.SourcesDirectory)\android\app\build\outputs\bundle\release'
               artifact: 'TodoApp-AAB'
@@ -219,6 +223,7 @@ stages:
           # 15. Publier APK dans Azure Artifacts Feed
           - task: UniversalPackages@0
             displayName: 'Publier APK dans Azure Artifacts'
+            condition: and(succeeded(), in(variables['Build.SourceBranch'], 'refs/heads/main', 'refs/heads/develop'))
             inputs:
               command: 'publish'
               publishDirectory: '$(Build.SourcesDirectory)\android\app\build\outputs\apk\release'

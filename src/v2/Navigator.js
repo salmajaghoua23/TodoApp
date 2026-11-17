@@ -15,9 +15,18 @@ import TaskDetailScreen from './screens/TaskDetailScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import AboutScreen from './screens/AboutScreen';
 
-
-const TAB_SCREENS = { Home: HomeScreen, Search: SearchScreen, Calendar: CalendarScreen, Profile: ProfileScreen };
-const STACK_SCREENS = { AddTask: AddTaskScreen, TaskDetail: TaskDetailScreen, Settings: SettingsScreen, About: AboutScreen };
+const TAB_SCREENS = {
+  Home: HomeScreen,
+  Search: SearchScreen,
+  Calendar: CalendarScreen,
+  Profile: ProfileScreen,
+};
+const STACK_SCREENS = {
+  AddTask: AddTaskScreen,
+  TaskDetail: TaskDetailScreen,
+  Settings: SettingsScreen,
+  About: AboutScreen,
+};
 
 // Navigation maison (pile d'écrans) : évite d'ajouter react-navigation + modules natifs.
 export default function Navigator() {
@@ -26,9 +35,19 @@ export default function Navigator() {
   const [stack, setStack] = useState([{ name: 'Home', params: {} }]);
   const [drawer, setDrawer] = useState(false);
 
-  const navigate = useCallback((name, params = {}) => setStack(s => [...s, { name, params }]), []);
-  const goBack = useCallback(() => setStack(s => (s.length > 1 ? s.slice(0, -1) : s)), []);
-  const switchTab = useCallback((name, params = {}) => setStack([{ name, params: { ...params, ts: Date.now() } }]), []);
+  const navigate = useCallback(
+    (name, params = {}) => setStack(s => [...s, { name, params }]),
+    [],
+  );
+  const goBack = useCallback(
+    () => setStack(s => (s.length > 1 ? s.slice(0, -1) : s)),
+    [],
+  );
+  const switchTab = useCallback(
+    (name, params = {}) =>
+      setStack([{ name, params: { ...params, ts: Date.now() } }]),
+    [],
+  );
   const openDrawer = useCallback(() => setDrawer(true), []);
   const closeDrawer = useCallback(() => setDrawer(false), []);
 
@@ -42,9 +61,18 @@ export default function Navigator() {
 
   useEffect(() => {
     const sub = BackHandler.addEventListener('hardwareBackPress', () => {
-      if (drawer) { setDrawer(false); return true; }
-      if (stack.length > 1) { goBack(); return true; }
-      if (stack[0].name !== 'Home') { switchTab('Home'); return true; }
+      if (drawer) {
+        setDrawer(false);
+        return true;
+      }
+      if (stack.length > 1) {
+        goBack();
+        return true;
+      }
+      if (stack[0].name !== 'Home') {
+        switchTab('Home');
+        return true;
+      }
       return false;
     });
     return () => sub.remove();
@@ -61,13 +89,26 @@ export default function Navigator() {
   };
 
   return (
-    <NavContext.Provider value={{ navigate, goBack, switchTab, openDrawer, closeDrawer, current }}>
+    <NavContext.Provider
+      value={{ navigate, goBack, switchTab, openDrawer, closeDrawer, current }}
+    >
       <View style={{ flex: 1, backgroundColor: colors.bg }}>
         <View style={{ flex: 1 }}>
-          <Current key={`${current.name}-${stack.length}-${current.params.ts || ''}`} params={current.params} />
+          <Current
+            key={`${current.name}-${stack.length}-${current.params.ts || ''}`}
+            params={current.params}
+          />
         </View>
-        {isTab ? <TabBar active={current.name} onChange={n => switchTab(n)} /> : null}
-        <Drawer open={drawer} onClose={closeDrawer} counts={stats} onSelect={onDrawerSelect} onLogout={confirmLogout} />
+        {isTab ? (
+          <TabBar active={current.name} onChange={n => switchTab(n)} />
+        ) : null}
+        <Drawer
+          open={drawer}
+          onClose={closeDrawer}
+          counts={stats}
+          onSelect={onDrawerSelect}
+          onLogout={confirmLogout}
+        />
       </View>
     </NavContext.Provider>
   );

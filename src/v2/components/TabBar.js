@@ -18,9 +18,21 @@ export default function TabBar({ active, onChange }) {
       {TABS.map(t => {
         const on = t.name === active;
         return (
-          <TouchableOpacity key={t.name} style={styles.item} onPress={() => onChange(t.name)}>
+          <TouchableOpacity
+            key={t.name}
+            testID={`tab-${t.name}`}
+            style={styles.item}
+            onPress={() => onChange(t.name)}
+          >
             <Icon name={t.icon} size={22} style={{ opacity: on ? 1 : 0.55 }} />
-            <Text style={[styles.label, on && { color: colors.primary, fontWeight: '800' }]}>{t.label}</Text>
+            <Text
+              style={[
+                styles.label,
+                on && { color: colors.primary, fontWeight: '800' },
+              ]}
+            >
+              {t.label}
+            </Text>
           </TouchableOpacity>
         );
       })}
@@ -29,7 +41,13 @@ export default function TabBar({ active, onChange }) {
 }
 
 const styles = StyleSheet.create({
-  bar: { flexDirection: 'row', backgroundColor: '#fff', borderTopWidth: 1, borderTopColor: '#EEEAFB', paddingTop: 8 },
+  bar: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#EEEAFB',
+    paddingTop: 8,
+  },
   item: { flex: 1, alignItems: 'center' },
   label: { fontSize: 11, color: colors.muted, marginTop: 2, fontWeight: '600' },
 });

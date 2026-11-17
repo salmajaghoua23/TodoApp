@@ -25,8 +25,8 @@ const pressSignIn = async () => {
   const btn = renderer.root.findAll(
     n =>
       typeof n.props.onPress === 'function' &&
-      n.findAll(c => c.type === Text && c.props.children === 'Sign In')
-        .length > 0,
+      n.findAll(c => c.type === Text && c.props.children === 'Sign In').length >
+        0,
   )[0];
   await ReactTestRenderer.act(async () => {
     btn.props.onPress();

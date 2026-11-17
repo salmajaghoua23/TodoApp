@@ -22,7 +22,14 @@ export const priorityStyle = {
 };
 
 export const PRIORITIES = ['High', 'Medium', 'Low'];
-export const CATEGORIES = ['Work', 'Personal', 'Study', 'Shopping', 'Health', 'Travel'];
+export const CATEGORIES = [
+  'Work',
+  'Personal',
+  'Study',
+  'Shopping',
+  'Health',
+  'Travel',
+];
 
 export const shadow = {
   shadowColor: '#5B3FD6',

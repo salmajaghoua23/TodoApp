@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { colors } from '../theme';
 import { addDaysKey, formatShort, isValidKey, todayKey } from '../utils/date';
 import Button from './Button';
@@ -21,22 +28,55 @@ export default function DateModal({ visible, value, onSelect, onClose }) {
   const valid = isValidKey(text);
 
   return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+    <Modal
+      visible={visible}
+      transparent
+      animationType="fade"
+      onRequestClose={onClose}
+    >
       <Pressable style={styles.overlay} onPress={onClose}>
         <Pressable style={styles.sheet} onPress={() => {}}>
           <Text style={styles.title}>Set Due Date</Text>
           <View style={styles.chips}>
             {quick.map(q => (
-              <TouchableOpacity key={q.label} style={[styles.chip, value === q.key && styles.chipActive]} onPress={() => onSelect(q.key)}>
-                <Text style={[styles.chipTxt, value === q.key && { color: '#fff' }]}>{q.label}</Text>
+              <TouchableOpacity
+                key={q.label}
+                testID={`date-${q.label}`}
+                style={[styles.chip, value === q.key && styles.chipActive]}
+                onPress={() => onSelect(q.key)}
+              >
+                <Text
+                  style={[styles.chipTxt, value === q.key && { color: '#fff' }]}
+                >
+                  {q.label}
+                </Text>
               </TouchableOpacity>
             ))}
           </View>
           <Text style={styles.hint}>Or type a date (YYYY-MM-DD)</Text>
-          <Field value={text} onChangeText={setText} placeholder="2026-11-25" keyboardType="numbers-and-punctuation" maxLength={10} />
-          <Button title="Confirm date" disabled={!valid} onPress={() => onSelect(text)} style={{ marginTop: 12 }} />
-          <TouchableOpacity onPress={() => onSelect(null)} style={{ alignItems: 'center', marginTop: 14 }}>
-            <Text style={{ color: colors.muted, fontWeight: '600' }}>No due date {value ? `(current: ${formatShort(value)})` : ''}</Text>
+          <Field
+            testID="date-input"
+            value={text}
+            onChangeText={setText}
+            placeholder="2026-11-25"
+            keyboardType="numbers-and-punctuation"
+            maxLength={10}
+          />
+          <Button
+            testID="date-confirm"
+            title="Confirm date"
+            disabled={!valid}
+            onPress={() => onSelect(text)}
+            style={{ marginTop: 12 }}
+          />
+          <TouchableOpacity
+            testID="date-none"
+            onPress={() => onSelect(null)}
+            style={{ alignItems: 'center', marginTop: 14 }}
+          >
+            <Text style={{ color: colors.muted, fontWeight: '600' }}>
+              No due date {value ? `(current: ${formatShort(value)})` : ''}
+            </Text>
           </TouchableOpacity>
         </Pressable>
       </Pressable>
@@ -45,11 +85,26 @@ export default function DateModal({ visible, value, onSelect, onClose }) {
 }
 
 const styles = StyleSheet.create({
-  overlay: { flex: 1, backgroundColor: 'rgba(20,12,60,0.45)', justifyContent: 'center', padding: 28 },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(20,12,60,0.45)',
+    justifyContent: 'center',
+    padding: 28,
+  },
   sheet: { backgroundColor: '#fff', borderRadius: 20, padding: 18 },
-  title: { fontSize: 18, fontWeight: '800', color: colors.text, marginBottom: 12 },
+  title: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: colors.text,
+    marginBottom: 12,
+  },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  chip: { paddingHorizontal: 14, paddingVertical: 9, borderRadius: 20, backgroundColor: colors.primarySoft },
+  chip: {
+    paddingHorizontal: 14,
+    paddingVertical: 9,
+    borderRadius: 20,
+    backgroundColor: colors.primarySoft,
+  },
   chipActive: { backgroundColor: colors.primary },
   chipTxt: { color: colors.primary, fontWeight: '700' },
   hint: { marginTop: 16, marginBottom: 8, color: colors.muted, fontSize: 13 },

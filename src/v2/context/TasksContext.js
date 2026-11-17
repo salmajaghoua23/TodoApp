@@ -1,4 +1,12 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Alert } from 'react-native';
 import { KEYS, load, save } from '../storage';
 import { supabase } from '../supabase';
@@ -46,7 +54,10 @@ export function TasksProvider({ children }) {
 
   const refresh = useCallback(async () => {
     setError(null);
-    const { data, error: err } = await supabase.from('tasks').select('*').order('created_at', { ascending: false });
+    const { data, error: err } = await supabase
+      .from('tasks')
+      .select('*')
+      .order('created_at', { ascending: false });
     if (err) setError(err.message);
     else apply(data.map(toTask));
     setLoading(false);
@@ -54,7 +65,9 @@ export function TasksProvider({ children }) {
 
   useEffect(() => {
     refresh();
-    load(prefsKey, { notifications: true }).then(p => setNotificationsState(p.notifications !== false));
+    load(prefsKey, { notifications: true }).then(p =>
+      setNotificationsState(p.notifications !== false),
+    );
   }, [refresh, prefsKey]);
 
   const addTask = useCallback(
@@ -83,7 +96,10 @@ export function TasksProvider({ children }) {
     async (id, patch) => {
       const prev = ref.current;
       apply(prev.map(t => (t.id === id ? { ...t, ...patch } : t)));
-      const { error: err } = await supabase.from('tasks').update(toRow(patch)).eq('id', id);
+      const { error: err } = await supabase
+        .from('tasks')
+        .update(toRow(patch))
+        .eq('id', id);
       if (err) {
         apply(prev);
         throw new Error(err.message);
@@ -121,7 +137,10 @@ export function TasksProvider({ children }) {
   const clearCompleted = useCallback(async () => {
     const prev = ref.current;
     apply(prev.filter(t => !t.completed));
-    const { error: err } = await supabase.from('tasks').delete().eq('completed', true);
+    const { error: err } = await supabase
+      .from('tasks')
+      .delete()
+      .eq('completed', true);
     if (err) {
       apply(prev);
       Alert.alert('Error', err.message);
@@ -142,13 +161,28 @@ export function TasksProvider({ children }) {
       total: tasks.length,
       done,
       pending: tasks.length - done,
-      important: tasks.filter(t => t.priority === 'High' && !t.completed).length,
+      important: tasks.filter(t => t.priority === 'High' && !t.completed)
+        .length,
     };
   }, [tasks]);
 
   return (
     <TasksContext.Provider
-      value={{ tasks, loading, error, refresh, stats, addTask, updateTask, toggleTask, deleteTask, clearCompleted, notifications, setNotifications }}>
+      value={{
+        tasks,
+        loading,
+        error,
+        refresh,
+        stats,
+        addTask,
+        updateTask,
+        toggleTask,
+        deleteTask,
+        clearCompleted,
+        notifications,
+        setNotifications,
+      }}
+    >
       {children}
     </TasksContext.Provider>
   );

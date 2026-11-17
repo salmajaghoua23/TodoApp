@@ -8,14 +8,21 @@ export default function useTaskMenu() {
   const { deleteTask } = useTasks();
   return task =>
     Alert.alert(task.title, 'Choose an action', [
-      { text: 'Edit', onPress: () => nav.navigate('AddTask', { taskId: task.id }) },
+      {
+        text: 'Edit',
+        onPress: () => nav.navigate('AddTask', { taskId: task.id }),
+      },
       {
         text: 'Delete',
         style: 'destructive',
         onPress: () =>
           Alert.alert('Delete task', 'This cannot be undone.', [
             { text: 'Cancel', style: 'cancel' },
-            { text: 'Delete', style: 'destructive', onPress: () => deleteTask(task.id) },
+            {
+              text: 'Delete',
+              style: 'destructive',
+              onPress: () => deleteTask(task.id),
+            },
           ]),
       },
       { text: 'Cancel', style: 'cancel' },

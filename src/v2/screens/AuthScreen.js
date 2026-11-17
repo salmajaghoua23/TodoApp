@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { colors } from '../theme';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
@@ -29,7 +38,10 @@ export default function AuthScreen() {
           setBusy(false);
           setMode('login');
           setPassword('');
-          Alert.alert('Check your email', 'We sent you a confirmation link. Confirm your email, then sign in.');
+          Alert.alert(
+            'Check your email',
+            'We sent you a confirmation link. Confirm your email, then sign in.',
+          );
         }
       }
     } catch (e) {
@@ -39,16 +51,45 @@ export default function AuthScreen() {
   };
   return (
     <Screen bg="#fff">
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <ScrollView contentContainerStyle={styles.wrap} keyboardShouldPersistTaps="handled">
-          <View style={styles.logo}><Text style={styles.check}>✓</Text></View>
-          <Text style={styles.title}>{isLogin ? 'Welcome Back 👋' : 'Create Account ✨'}</Text>
-          <Text style={styles.sub}>{isLogin ? 'Sign in to continue' : 'Sign up to get started'}</Text>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <ScrollView
+          contentContainerStyle={styles.wrap}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.logo}>
+            <Text style={styles.check}>✓</Text>
+          </View>
+          <Text style={styles.title}>
+            {isLogin ? 'Welcome Back 👋' : 'Create Account ✨'}
+          </Text>
+          <Text style={styles.sub}>
+            {isLogin ? 'Sign in to continue' : 'Sign up to get started'}
+          </Text>
 
           <View style={{ width: '100%', marginTop: 28, gap: 14 }}>
-            {!isLogin ? <Field icon="user" placeholder="Full name" value={name} onChangeText={setName} /> : null}
-            <Field icon="mail" placeholder="Email address" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" />
+            {!isLogin ? (
+              <Field
+                testID="auth-name"
+                icon="user"
+                placeholder="Full name"
+                value={name}
+                onChangeText={setName}
+              />
+            ) : null}
             <Field
+              testID="auth-email"
+              icon="mail"
+              placeholder="Email address"
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              keyboardType="email-address"
+            />
+            <Field
+              testID="auth-password"
               icon="lock"
               placeholder="Password"
               value={password}
@@ -62,12 +103,30 @@ export default function AuthScreen() {
 
           {error ? <Text style={styles.error}>{error}</Text> : null}
 
-          <Button title={isLogin ? 'Sign In' : 'Sign Up'} onPress={submit} loading={busy} style={{ width: '100%', marginTop: 22 }} />
+          <Button
+            testID="auth-submit"
+            title={isLogin ? 'Sign In' : 'Sign Up'}
+            onPress={submit}
+            loading={busy}
+            style={{ width: '100%', marginTop: 22 }}
+          />
 
           <View style={{ flexDirection: 'row', marginTop: 26 }}>
-            <Text style={{ color: colors.text }}>{isLogin ? "Don't have an account? " : 'Already have an account? '}</Text>
-            <TouchableOpacity onPress={() => { setMode(isLogin ? 'signup' : 'login'); setError(''); }}>
-              <Text style={{ color: colors.primary, fontWeight: '800' }}>{isLogin ? 'Sign Up' : 'Sign In'}</Text>
+            <Text style={{ color: colors.text }}>
+              {isLogin
+                ? "Don't have an account? "
+                : 'Already have an account? '}
+            </Text>
+            <TouchableOpacity
+              testID="auth-toggle"
+              onPress={() => {
+                setMode(isLogin ? 'signup' : 'login');
+                setError('');
+              }}
+            >
+              <Text style={{ color: colors.primary, fontWeight: '800' }}>
+                {isLogin ? 'Sign Up' : 'Sign In'}
+              </Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -77,11 +136,27 @@ export default function AuthScreen() {
 }
 
 const styles = StyleSheet.create({
-  wrap: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', padding: 28 },
-  logo: { width: 76, height: 76, borderRadius: 20, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center' },
+  wrap: {
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 28,
+  },
+  logo: {
+    width: 76,
+    height: 76,
+    borderRadius: 20,
+    backgroundColor: colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   check: { color: '#fff', fontSize: 42, fontWeight: '900' },
   title: { fontSize: 28, fontWeight: '800', color: colors.text, marginTop: 20 },
   sub: { fontSize: 15, color: colors.muted, marginTop: 6 },
-  error: { color: colors.danger, marginTop: 14, fontWeight: '600', textAlign: 'center' },
-
+  error: {
+    color: colors.danger,
+    marginTop: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
 });
