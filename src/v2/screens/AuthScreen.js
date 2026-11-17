@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -51,10 +50,7 @@ export default function AuthScreen() {
   };
   return (
     <Screen bg="#fff">
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
         <ScrollView
           contentContainerStyle={styles.wrap}
           keyboardShouldPersistTaps="handled"
