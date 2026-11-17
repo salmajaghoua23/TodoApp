@@ -259,7 +259,7 @@ stages:
             inputs:
               secureFile: 'todoapp-cicd-6b8d564f93e1.json'
 
-          # 18. Distribuer l'APK aux testeurs via Firebase App Distribution
+              # 18. Distribuer l'APK aux testeurs via Firebase App Distribution
           - task: PowerShell@2
             displayName: 'Distribuer APK avec Firebase App Distribution'
             condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
@@ -268,16 +268,20 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                      $apk = Get-ChildItem "$(Build.SourcesDirectory)\android\app\build\outputs\apk\release" -Filter *.apk | Select-Object -First 1
-                      
-                      if (-not $apk) {
-                        throw "Aucun APK trouve dans android\app\build\outputs\apk\release"
-                      }
-                      
-                      Write-Host "APK a distribuer : $($apk.FullName)"
-                      
-                      npx --yes firebase-tools appdistribution:distribute "$($apk.FullName)" --app "$(FIREBASE_APP_ID)" --groups "$(FIREBASE_GROUP)" --release-notes "Build $(Build.BuildId) - $(Build.SourceVersionMessage)"
-                      
-                      if ($LASTEXITCODE -ne 0) {
-                        throw "Distribution Firebase echouee"
-                      }
+                $key = Get-Content $env:GOOGLE_APPLICATION_CREDENTIALS -Raw | ConvertFrom-Json
+                Write-Host "Compte de la cle: $($key.client_email)"
+                Write-Host "Projet de la cle: $($key.project_id)"
+
+                $apk = Get-ChildItem "$(Build.SourcesDirectory)\android\app\build\outputs\apk\release" -Filter *.apk | Select-Object -First 1
+
+                if (-not $apk) {
+                  throw "Aucun APK trouve dans android\app\build\outputs\apk\release"
+                }
+
+                Write-Host "APK a distribuer : $($apk.FullName)"
+
+                npx --yes firebase-tools appdistribution:distribute "$($apk.FullName)" --app "$(FIREBASE_APP_ID)" --groups "$(FIREBASE_GROUP)" --release-notes "Build $(Build.BuildId) - $(Build.SourceVersionMessage)"
+
+                if ($LASTEXITCODE -ne 0) {
+                  throw "Distribution Firebase echouee"
+                }
