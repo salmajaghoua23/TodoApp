@@ -245,7 +245,7 @@ stages:
               command: 'publish'
               publishDirectory: '$(Build.SourcesDirectory)\android\app\build\outputs\bundle\release'
               feedsToUsePublish: 'internal'
-              vstsFeedPublish: 'cloud todoapp/TodoAppFeed'
+              vstsFeedPublish: 'cloud toDoApp/TodoAppFeed'
               vstsFeedPackagePublish: 'todoapp-aab'
               versionOption: 'custom'
               versionPublish: '1.0.$(Build.BuildId)'
