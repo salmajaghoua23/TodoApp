@@ -30,6 +30,10 @@ variables:
   # Supabase : URL du projet + clé PUBLIQUE (anon / publishable). Jamais la clé secret/service_role.
   SUPABASE_URL: 'https://wjzpfxzcylrokauevxly.supabase.co'
   SUPABASE_KEY: 'sb_publishable__tS71L9cNzwtqZCFSSW6zg_WcLczXeg'
+  # Firebase App Distribution
+  # App ID : Firebase > Paramètres du projet > Général > Vos applications (format 1:123...:android:abc...)
+  FIREBASE_APP_ID: '1:649512825504:android:cb45c2df24e87672280fc5'
+  FIREBASE_GROUP: 'testeurs'
 
 stages:
 
@@ -246,3 +250,34 @@ stages:
               versionOption: 'custom'
               versionPublish: '1.0.$(Build.BuildId)'
               packagePublishDescription: 'TodoApp Android App Bundle'
+
+          # 17. Récupérer la clé du compte de service Firebase (Pipelines > Library > Secure files)
+          - task: DownloadSecureFile@1
+            name: firebaseKey
+            displayName: 'Télécharger la clé Firebase'
+            condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+            inputs:
+              secureFile: 'todoapp-cicd-6b8d564f93e1.json'
+
+          # 18. Distribuer l'APK aux testeurs via Firebase App Distribution
+          - task: PowerShell@2
+            displayName: 'Distribuer APK avec Firebase App Distribution'
+            condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+            env:
+              GOOGLE_APPLICATION_CREDENTIALS: $(firebaseKey.secureFilePath)
+            inputs:
+              targetType: 'inline'
+              script: |
+                      $apk = Get-ChildItem "$(Build.SourcesDirectory)\android\app\build\outputs\apk\release" -Filter *.apk | Select-Object -First 1
+                      
+                      if (-not $apk) {
+                        throw "Aucun APK trouve dans android\app\build\outputs\apk\release"
+                      }
+                      
+                      Write-Host "APK a distribuer : $($apk.FullName)"
+                      
+                      npx --yes firebase-tools appdistribution:distribute "$($apk.FullName)" --app "$(FIREBASE_APP_ID)" --groups "$(FIREBASE_GROUP)" --release-notes "Build $(Build.BuildId) - $(Build.SourceVersionMessage)"
+                      
+                      if ($LASTEXITCODE -ne 0) {
+                        throw "Distribution Firebase echouee"
+                      }
