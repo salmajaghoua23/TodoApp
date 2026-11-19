@@ -1,0 +1,83 @@
+[debug] [2026-11-17T18:21:14.630Z] ----------------------------------------------------------------------
+[debug] [2026-11-17T18:21:14.635Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\salma\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\firebase-tools\lib\bin\firebase.js appdistribution:distribute C:\chemin\vers\app-release.apk --app 1:649512825504:android:cb45c2df24e87672280fc5 --groups testeurs --debug
+[debug] [2026-11-17T18:21:14.636Z] CLI Version:   15.36.0
+[debug] [2026-11-17T18:21:14.636Z] Platform:      win32
+[debug] [2026-11-17T18:21:14.636Z] Node Version:  v26.13.0
+[debug] [2026-11-17T18:21:14.637Z] Detected Agent: unknown
+[debug] [2026-11-17T18:21:14.637Z] Time:          Tue Nov 17 2026 18:21:14 GMT+0000 (heure normale d’Europe de l’Ouest)
+[debug] [2026-11-17T18:21:14.637Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-11-17T18:21:14.680Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-11-17T18:21:14.721Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-11-17T18:21:14.723Z] Error: The file at C:\chemin\vers\le-fichier.json does not exist, or it is not a file. ENOENT: no such file or directory, lstat 'C:\chemin'
+    at Object.realpathSync (node:fs:3455:29)
+    at GoogleAuth._getApplicationCredentialsFromFilePath (C:\Users\salma\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\google-auth-library\build\src\auth\googleauth.js:375:27)
+    at GoogleAuth._tryGetApplicationCredentialsFromEnvironmentVariable (C:\Users\salma\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\google-auth-library\build\src\auth\googleauth.js:316:25)
+    at GoogleAuth.getApplicationDefaultAsync (C:\Users\salma\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\google-auth-library\build\src\auth\googleauth.js:260:24)
+    at GoogleAuth._GoogleAuth_determineClient (C:\Users\salma\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\google-auth-library\build\src\auth\googleauth.js:834:43)
+    at GoogleAuth.getClient (C:\Users\salma\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\google-auth-library\build\src\auth\googleauth.js:696:223)
+    at GoogleAuth.getAccessToken (C:\Users\salma\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\google-auth-library\build\src\auth\googleauth.js:722:35)
+    at autoAuth (C:\Users\salma\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\firebase-tools\lib\requireAuth.js:38:32)
+    at Object.requireAuth [as fn] (C:\Users\salma\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\firebase-tools\lib\requireAuth.js:100:26)
+    at C:\Users\salma\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\firebase-tools\lib\command.js:285:30
+[error] 
+[error] Error: Failed to authenticate, have you run firebase login?
+[debug] [2026-11-17T18:30:03.271Z] ----------------------------------------------------------------------
+[debug] [2026-11-17T18:30:03.287Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\salma\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\firebase-tools\lib\bin\firebase.js appdistribution:distribute C:\Users\salma\Downloads\app-release.apk --app 1:649512825504:android:cb45c2df24e87672280fc5 --groups testeurs --debug
+[debug] [2026-11-17T18:30:03.288Z] CLI Version:   15.36.0
+[debug] [2026-11-17T18:30:03.288Z] Platform:      win32
+[debug] [2026-11-17T18:30:03.289Z] Node Version:  v26.13.0
+[debug] [2026-11-17T18:30:03.289Z] Detected Agent: unknown
+[debug] [2026-11-17T18:30:03.290Z] Time:          Tue Nov 17 2026 18:30:03 GMT+0000 (heure normale d’Europe de l’Ouest)
+[debug] [2026-11-17T18:30:03.290Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-11-17T18:30:03.319Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-11-17T18:30:03.541Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-11-17T18:30:04.222Z] Running auto auth
+[info] ENOENT: no such file or directory, stat 'C:\Users\salma\Downloads\app-release.apk'
+[error] 
+[error] Error: File C:\Users\salma\Downloads\app-release.apk does not exist: verify that file points to a binary
+[debug] [2026-11-17T18:32:30.957Z] ----------------------------------------------------------------------
+[debug] [2026-11-17T18:32:30.971Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\salma\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\firebase-tools\lib\bin\firebase.js appdistribution:distribute C:\Users\salma\Downloads\TodoApp-APK\TodoApp-APK\app-release.apk --app 1:649512825504:android:cb45c2df24e87672280fc5 --groups testeurs --debug
+[debug] [2026-11-17T18:32:30.975Z] CLI Version:   15.36.0
+[debug] [2026-11-17T18:32:30.976Z] Platform:      win32
+[debug] [2026-11-17T18:32:30.978Z] Node Version:  v26.13.0
+[debug] [2026-11-17T18:32:30.980Z] Detected Agent: unknown
+[debug] [2026-11-17T18:32:30.981Z] Time:          Tue Nov 17 2026 18:32:30 GMT+0000 (heure normale d’Europe de l’Ouest)
+[debug] [2026-11-17T18:32:30.982Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-11-17T18:32:31.013Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-11-17T18:32:31.075Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-11-17T18:32:31.318Z] Running auto auth
+[info] i  uploading binary... 
+[debug] [2026-11-17T18:32:31.323Z] No OAuth tokens found
+[debug] [2026-11-17T18:32:31.324Z] >>> [apiv2][query] POST https://firebaseappdistribution.googleapis.com/upload/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases:upload [none]
+[debug] [2026-11-17T18:32:31.324Z] >>> [apiv2][body] POST https://firebaseappdistribution.googleapis.com/upload/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases:upload [stream]
+[debug] [2026-11-17T18:32:31.432Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2026-11-17T18:32:31.432Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2026-11-17T18:32:38.380Z] <<< [apiv2][status] POST https://firebaseappdistribution.googleapis.com/upload/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases:upload 200
+[debug] [2026-11-17T18:32:38.380Z] <<< [apiv2][body] POST https://firebaseappdistribution.googleapis.com/upload/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases:upload {"name":"projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/-/operations/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6"}
+[debug] [2026-11-17T18:32:38.383Z] No OAuth tokens found
+[debug] [2026-11-17T18:32:38.383Z] >>> [apiv2][query] GET https://firebaseappdistribution.googleapis.com/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/-/operations/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6 [none]
+[debug] [2026-11-17T18:32:39.126Z] <<< [apiv2][status] GET https://firebaseappdistribution.googleapis.com/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/-/operations/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6 200
+[debug] [2026-11-17T18:32:39.126Z] <<< [apiv2][body] GET https://firebaseappdistribution.googleapis.com/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/-/operations/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6 {"name":"projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/-/operations/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6"}
+[debug] [2026-11-17T18:32:41.136Z] [App Distribution Upload Poller] Retrying task index 0
+[debug] [2026-11-17T18:32:41.137Z] No OAuth tokens found
+[debug] [2026-11-17T18:32:41.138Z] >>> [apiv2][query] GET https://firebaseappdistribution.googleapis.com/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/-/operations/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6 [none]
+[debug] [2026-11-17T18:32:41.495Z] <<< [apiv2][status] GET https://firebaseappdistribution.googleapis.com/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/-/operations/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6 200
+[debug] [2026-11-17T18:32:41.496Z] <<< [apiv2][body] GET https://firebaseappdistribution.googleapis.com/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/-/operations/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6 {"name":"projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/-/operations/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6"}
+[debug] [2026-11-17T18:32:45.509Z] [App Distribution Upload Poller] Retrying task index 0
+[debug] [2026-11-17T18:32:45.512Z] No OAuth tokens found
+[debug] [2026-11-17T18:32:45.513Z] >>> [apiv2][query] GET https://firebaseappdistribution.googleapis.com/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/-/operations/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6 [none]
+[debug] [2026-11-17T18:32:46.438Z] <<< [apiv2][status] GET https://firebaseappdistribution.googleapis.com/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/-/operations/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6 200
+[debug] [2026-11-17T18:32:46.438Z] <<< [apiv2][body] GET https://firebaseappdistribution.googleapis.com/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/-/operations/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6 {"name":"projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/-/operations/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6","done":true,"response":{"@type":"type.googleapis.com/google.firebase.appdistro.v1.UploadReleaseResponse","result":"RELEASE_CREATED","release":{"name":"projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/7mjga7h93b04g","displayVersion":"1.0","buildVersion":"1","createTime":"2026-11-17T18:32:44.456162Z","firebaseConsoleUri":"https://console.firebase.google.com/project/todoapp-cicd/appdistribution/app/android:com.todoapp/releases/7mjga7h93b04g?utm_source=firebase-tools","testingUri":"https://appdistribution.firebase.google.com/testerapps/1:649512825504:android:cb45c2df24e87672280fc5/releases/7mjga7h93b04g?utm_source=firebase-tools","binaryDownloadUri":"https://firebaseappdistribution.googleapis.com/app-binary-downloads/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/7mjga7h93b04g/binaries/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6/app.apk?utm_source=firebase-tools&token=AMIZtSMAAAAAavyr30QiJcBwg9PGjTpH9B11aZFLdVXtMV6SgBP35VgT_miECwStvCXDasmEdGLlkWm11A0rKUCNsV8LOFrHZla1JqCiuzoFgVnF6Sw5TlFTD_vzRx6K9SwLeEU95cKI7WUKlUU9uQQ6QSJNY0LxQ1lHNPmPSXhVJW7U3nWjJ2K5CsPQAWifjtfNyZw-d-cijqueQjHnJSqFVNSAzVtk_h2UmJea-c1XY3O4nzD-0azOkwE7wMmy7BbMr7316HaRhQymIYWPir5BhTeE8asFUft965uFVfRQLgNqyOv-rNAh7S5yO7siwBGObQPeCtaj1Z7c2D73Cb20bPhphfGyBP1gQ18","updateTime":"2026-11-17T18:32:44.585007Z","expireTime":"2027-04-16T18:32:44.456162Z","binaryType":"APK","testState":"NO_TESTS_REQUESTED","androidPackageRegistrationState":"NOT_REGISTERED"}}}
+[info] +  uploaded new release 1.0 (1) successfully! 
+[info] +  View this release in the Firebase console: https://console.firebase.google.com/project/todoapp-cicd/appdistribution/app/android:com.todoapp/releases/7mjga7h93b04g?utm_source=firebase-tools 
+[info] +  Share this release with testers who have access: https://appdistribution.firebase.google.com/testerapps/1:649512825504:android:cb45c2df24e87672280fc5/releases/7mjga7h93b04g?utm_source=firebase-tools 
+[info] +  Download the release binary (link expires in 1 hour): https://firebaseappdistribution.googleapis.com/app-binary-downloads/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/7mjga7h93b04g/binaries/c304102dfdf8e5f5e2194d20bf699a0bb528d18512e8e2fc71fd64f4d6619bf6/app.apk?utm_source=firebase-tools&token=AMIZtSMAAAAAavyr30QiJcBwg9PGjTpH9B11aZFLdVXtMV6SgBP35VgT_miECwStvCXDasmEdGLlkWm11A0rKUCNsV8LOFrHZla1JqCiuzoFgVnF6Sw5TlFTD_vzRx6K9SwLeEU95cKI7WUKlUU9uQQ6QSJNY0LxQ1lHNPmPSXhVJW7U3nWjJ2K5CsPQAWifjtfNyZw-d-cijqueQjHnJSqFVNSAzVtk_h2UmJea-c1XY3O4nzD-0azOkwE7wMmy7BbMr7316HaRhQymIYWPir5BhTeE8asFUft965uFVfRQLgNqyOv-rNAh7S5yO7siwBGObQPeCtaj1Z7c2D73Cb20bPhphfGyBP1gQ18 
+[warn] !  no release notes specified, skipping 
+[info] i  distributing to testers/groups... 
+[debug] [2026-11-17T18:32:46.443Z] No OAuth tokens found
+[debug] [2026-11-17T18:32:46.443Z] >>> [apiv2][query] POST https://firebaseappdistribution.googleapis.com/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/7mjga7h93b04g:distribute [none]
+[debug] [2026-11-17T18:32:46.444Z] >>> [apiv2][body] POST https://firebaseappdistribution.googleapis.com/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/7mjga7h93b04g:distribute {"testerEmails":[],"groupAliases":["testeurs"]}
+[debug] [2026-11-17T18:32:47.574Z] <<< [apiv2][status] POST https://firebaseappdistribution.googleapis.com/v1/projects/649512825504/apps/1:649512825504:android:cb45c2df24e87672280fc5/releases/7mjga7h93b04g:distribute 200
