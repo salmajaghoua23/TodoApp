@@ -14,7 +14,28 @@ module.exports = {
     global: { statements: 70, functions: 65, lines: 70, branches: 55 },
   },
   reporters: [
-    'default',
-    ['jest-junit', { outputDirectory: 'coverage', outputName: 'junit.xml' }],
+      'default',
+      [
+        'jest-html-reporter',
+        {
+          pageTitle: 'TodoApp Unit Test Report',
+          outputPath: 'reports/jest-report.html',
+          includeFailureMsg: true,
+        },
+      ],
+      [
+        'jest-junit',
+        {
+          outputDirectory: 'reports',
+          outputName: 'junit.xml',
+        },
+      ],
+  ],
+
+    // Rapports de couverture
+  coverageReporters: [
+      'text',
+      'html',
+      'lcov',
   ],
 };

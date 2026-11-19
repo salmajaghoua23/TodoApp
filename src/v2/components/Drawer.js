@@ -40,27 +40,36 @@ export default function Drawer({ open, onClose, counts, onSelect, onLogout }) {
   const [mounted, setMounted] = useState(open);
 
   useEffect(() => {
-    if (open) {
-      setMounted(true);
-      Animated.timing(x, {
-        toValue: 0,
-        duration: 220,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.timing(x, {
-        toValue: -W,
-        duration: 180,
-        useNativeDriver: true,
-      }).start(() => setMounted(false));
-    }
-  }, [open, x]);
+    let timer;
+        if (open) {
+          setMounted(true);
+          Animated.timing(x, {
+            toValue: 0,
+            duration: 220,
+            useNativeDriver: true,
+          }).start();
+        } else {
+          Animated.timing(x, {
+            toValue: -W,
+            duration: 180,
+            useNativeDriver: true,
+          }).start();
+          // le menu disparaît toujours, même si l'animation ne se termine pas
+          timer = setTimeout(() => setMounted(false), 200);
+        }
+        return () => clearTimeout(timer);
+      }, [open, x]);
 
   if (!mounted) return null;
 
   return (
-    <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
-      <Pressable style={styles.overlay} onPress={onClose} />
+    <Pressable
+          testID="drawer-overlay"
+          style={StyleSheet.absoluteFill}
+          pointerEvents={open ? 'auto' : 'none'}
+          onPress={onClose}
+        >
+     <View pointerEvents="none" style={styles.overlay} />
       <Animated.View
         style={[
           styles.panel,
@@ -113,7 +122,7 @@ export default function Drawer({ open, onClose, counts, onSelect, onLogout }) {
           <Text style={styles.footerTxt}>Stay productive!</Text>
         </View>
       </Animated.View>
-    </View>
+    </Pressable>
   );
 }
 

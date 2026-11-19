@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="63" failures="0" errors="0" time="10.381">
+  <testsuite name="Accueil et tâches (table Supabase &quot;tasks&quot;)" errors="0" failures="0" skipped="0" timestamp="2026-11-19T21:33:21" time="5.633" tests="15">
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) état vide" name="Accueil et tâches (table Supabase &quot;tasks&quot;) état vide" time="0.814">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) affiche les tâches de l&apos;utilisateur seulement (RLS)" name="Accueil et tâches (table Supabase &quot;tasks&quot;) affiche les tâches de l&apos;utilisateur seulement (RLS)" time="0.044">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) erreur de chargement puis réessai" name="Accueil et tâches (table Supabase &quot;tasks&quot;) erreur de chargement puis réessai" time="0.044">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) ajouter une tâche avec priorité, date et catégorie" name="Accueil et tâches (table Supabase &quot;tasks&quot;) ajouter une tâche avec priorité, date et catégorie" time="0.738">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) ajout : une erreur serveur affiche une alerte et garde le formulaire" name="Accueil et tâches (table Supabase &quot;tasks&quot;) ajout : une erreur serveur affiche une alerte et garde le formulaire" time="0.079">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) sélecteur de date : saisie manuelle" name="Accueil et tâches (table Supabase &quot;tasks&quot;) sélecteur de date : saisie manuelle" time="0.142">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) sélecteur de date : &quot;No due date&quot;" name="Accueil et tâches (table Supabase &quot;tasks&quot;) sélecteur de date : &quot;No due date&quot;" time="0.159">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) cocher / décocher une tâche" name="Accueil et tâches (table Supabase &quot;tasks&quot;) cocher / décocher une tâche" time="0.063">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) cocher : erreur serveur -&gt; alerte et état inchangé" name="Accueil et tâches (table Supabase &quot;tasks&quot;) cocher : erreur serveur -&gt; alerte et état inchangé" time="0.078">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) détail : terminer puis supprimer une tâche" name="Accueil et tâches (table Supabase &quot;tasks&quot;) détail : terminer puis supprimer une tâche" time="0.092">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) modifier une tâche depuis le détail" name="Accueil et tâches (table Supabase &quot;tasks&quot;) modifier une tâche depuis le détail" time="0.095">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) menu ⋮ : modifier" name="Accueil et tâches (table Supabase &quot;tasks&quot;) menu ⋮ : modifier" time="0.06">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) menu ⋮ : supprimer avec confirmation" name="Accueil et tâches (table Supabase &quot;tasks&quot;) menu ⋮ : supprimer avec confirmation" time="0.078">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) suppression : erreur serveur -&gt; la tâche reste affichée" name="Accueil et tâches (table Supabase &quot;tasks&quot;) suppression : erreur serveur -&gt; la tâche reste affichée" time="0.078">
+    </testcase>
+    <testcase classname="Accueil et tâches (table Supabase &quot;tasks&quot;) retour depuis le formulaire" name="Accueil et tâches (table Supabase &quot;tasks&quot;) retour depuis le formulaire" time="0.077">
+    </testcase>
+  </testsuite>
+  <testsuite name="Recherche" errors="0" failures="0" skipped="0" timestamp="2026-11-19T21:33:26" time="1.118" tests="6">
+    <testcase classname="Recherche recherche par texte" name="Recherche recherche par texte" time="0.271">
+    </testcase>
+    <testcase classname="Recherche filtres Pending / Completed / Important" name="Recherche filtres Pending / Completed / Important" time="0.112">
+    </testcase>
+    <testcase classname="Calendrier affiche les tâches du jour sélectionné" name="Calendrier affiche les tâches du jour sélectionné" time="0.093">
+    </testcase>
+    <testcase classname="Barre d&apos;onglets et menu latéral changer d&apos;onglet puis revenir à Home" name="Barre d&apos;onglets et menu latéral changer d&apos;onglet puis revenir à Home" time="0.142">
+    </testcase>
+    <testcase classname="Barre d&apos;onglets et menu latéral &quot;See all&quot; ouvre la recherche" name="Barre d&apos;onglets et menu latéral &quot;See all&quot; ouvre la recherche" time="0.061">
+    </testcase>
+    <testcase classname="Barre d&apos;onglets et menu latéral le tiroir filtre les tâches terminées" name="Barre d&apos;onglets et menu latéral le tiroir filtre les tâches terminées" time="0.126">
+    </testcase>
+  </testsuite>
+  <testsuite name="Profil et paramètres" errors="0" failures="0" skipped="0" timestamp="2026-11-19T21:33:28" time="0.93" tests="6">
+    <testcase classname="Profil et paramètres affiche le nom, les initiales et l&apos;email" name="Profil et paramètres affiche le nom, les initiales et l&apos;email" time="0.196">
+    </testcase>
+    <testcase classname="Profil et paramètres modifier le nom dans Settings" name="Profil et paramètres modifier le nom dans Settings" time="0.108">
+    </testcase>
+    <testcase classname="Profil et paramètres interrupteur Notifications sauvegardé" name="Profil et paramètres interrupteur Notifications sauvegardé" time="0.055">
+    </testcase>
+    <testcase classname="Profil et paramètres About App" name="Profil et paramètres About App" time="0.07">
+    </testcase>
+    <testcase classname="Profil et paramètres My Tasks ouvre la liste complète" name="Profil et paramètres My Tasks ouvre la liste complète" time="0.08">
+    </testcase>
+    <testcase classname="Profil et paramètres Settings : supprimer les tâches terminées" name="Profil et paramètres Settings : supprimer les tâches terminées" time="0.123">
+    </testcase>
+  </testsuite>
+  <testsuite name="AuthScreen" errors="0" failures="0" skipped="0" timestamp="2026-11-19T21:33:28" time="0.489" tests="5">
+    <testcase classname="AuthScreen affiche la connexion email/mot de passe" name="AuthScreen affiche la connexion email/mot de passe" time="0.163">
+    </testcase>
+    <testcase classname="AuthScreen ne propose plus la connexion Google" name="AuthScreen ne propose plus la connexion Google" time="0.005">
+    </testcase>
+    <testcase classname="AuthScreen soumet email et mot de passe à signIn" name="AuthScreen soumet email et mot de passe à signIn" time="0.044">
+    </testcase>
+    <testcase classname="AuthScreen affiche le message d’erreur renvoyé par signIn" name="AuthScreen affiche le message d’erreur renvoyé par signIn" time="0.008">
+    </testcase>
+    <testcase classname="AuthScreen bascule vers l’inscription avec le champ nom" name="AuthScreen bascule vers l’inscription avec le champ nom" time="0.008">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2026-11-19T21:33:29" time="0.424" tests="1">
+    <testcase classname=" affiche l’écran de configuration tant que Supabase n’est pas configuré" name=" affiche l’écran de configuration tant que Supabase n’est pas configuré" time="0.124">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2026-11-19T21:33:29" time="0.376" tests="1">
+    <testcase classname=" configuré : affiche l’onboarding, sans Google ni écran de configuration" name=" configuré : affiche l’onboarding, sans Google ni écran de configuration" time="0.115">
+    </testcase>
+  </testsuite>
+  <testsuite name="AuthContext" errors="0" failures="0" skipped="0" timestamp="2026-11-19T21:33:30" time="0.243" tests="11">
+    <testcase classname="AuthContext démarre sans utilisateur et devient prêt" name="AuthContext démarre sans utilisateur et devient prêt" time="0.003">
+    </testcase>
+    <testcase classname="AuthContext restaure la session Supabase existante" name="AuthContext restaure la session Supabase existante" time="0.001">
+    </testcase>
+    <testcase classname="AuthContext le nom par défaut vient de l’email" name="AuthContext le nom par défaut vient de l’email" time="0.001">
+    </testcase>
+    <testcase classname="AuthContext signIn refuse un email invalide ou un mot de passe vide" name="AuthContext signIn refuse un email invalide ou un mot de passe vide" time="0.031">
+    </testcase>
+    <testcase classname="AuthContext signIn normalise l’email et appelle Supabase" name="AuthContext signIn normalise l’email et appelle Supabase" time="0.001">
+    </testcase>
+    <testcase classname="AuthContext signIn traduit les erreurs Supabase en message lisible" name="AuthContext signIn traduit les erreurs Supabase en message lisible" time="0.003">
+    </testcase>
+    <testcase classname="AuthContext signUp valide le nom, l’email et la longueur du mot de passe" name="AuthContext signUp valide le nom, l’email et la longueur du mot de passe" time="0.002">
+    </testcase>
+    <testcase classname="AuthContext signUp indique needsConfirmation quand il n’y a pas de session" name="AuthContext signUp indique needsConfirmation quand il n’y a pas de session" time="0.002">
+    </testcase>
+    <testcase classname="AuthContext signOut vide l’utilisateur" name="AuthContext signOut vide l’utilisateur" time="0.004">
+    </testcase>
+    <testcase classname="AuthContext finishOnboarding marque l’onboarding comme terminé" name="AuthContext finishOnboarding marque l’onboarding comme terminé" time="0.001">
+    </testcase>
+    <testcase classname="AuthContext updateName met à jour le profil" name="AuthContext updateName met à jour le profil" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="TasksContext" errors="0" failures="0" skipped="0" timestamp="2026-11-19T21:33:30" time="0.208" tests="7">
+    <testcase classname="TasksContext charge les tâches et convertit snake_case -&gt; camelCase" name="TasksContext charge les tâches et convertit snake_case -&gt; camelCase" time="0.005">
+    </testcase>
+    <testcase classname="TasksContext calcule les statistiques" name="TasksContext calcule les statistiques" time="0.001">
+    </testcase>
+    <testcase classname="TasksContext addTask ajoute la tâche en tête de liste" name="TasksContext addTask ajoute la tâche en tête de liste" time="0.001">
+    </testcase>
+    <testcase classname="TasksContext toggleTask inverse l’état terminé" name="TasksContext toggleTask inverse l’état terminé" time="0">
+    </testcase>
+    <testcase classname="TasksContext deleteTask retire la tâche" name="TasksContext deleteTask retire la tâche" time="0.001">
+    </testcase>
+    <testcase classname="TasksContext clearCompleted ne garde que les tâches non terminées" name="TasksContext clearCompleted ne garde que les tâches non terminées" time="0.001">
+    </testcase>
+    <testcase classname="TasksContext updateTask revient en arrière si le serveur refuse" name="TasksContext updateTask revient en arrière si le serveur refuse" time="0.022">
+    </testcase>
+  </testsuite>
+  <testsuite name="storage" errors="0" failures="0" skipped="0" timestamp="2026-11-19T21:33:30" time="0.168" tests="5">
+    <testcase classname="storage save puis load restitue la valeur" name="storage save puis load restitue la valeur" time="0.001">
+    </testcase>
+    <testcase classname="storage load retourne la valeur par défaut si la clé est absente" name="storage load retourne la valeur par défaut si la clé est absente" time="0.002">
+    </testcase>
+    <testcase classname="storage les préférences sont séparées par utilisateur" name="storage les préférences sont séparées par utilisateur" time="0">
+    </testcase>
+    <testcase classname="storage remove supprime la clé" name="storage remove supprime la clé" time="0">
+    </testcase>
+    <testcase classname="storage load ne plante pas si AsyncStorage échoue" name="storage load ne plante pas si AsyncStorage échoue" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="utils/date" errors="0" failures="0" skipped="0" timestamp="2026-11-19T21:33:30" time="0.157" tests="6">
+    <testcase classname="utils/date toKey formate en AAAA-MM-JJ avec zéros" name="utils/date toKey formate en AAAA-MM-JJ avec zéros" time="0.001">
+    </testcase>
+    <testcase classname="utils/date parseKey est l’inverse de toKey" name="utils/date parseKey est l’inverse de toKey" time="0.001">
+    </testcase>
+    <testcase classname="utils/date isValidKey accepte les vraies dates et refuse les autres" name="utils/date isValidKey accepte les vraies dates et refuse les autres" time="0.001">
+    </testcase>
+    <testcase classname="utils/date addDaysKey avance et recule par rapport à aujourd’hui" name="utils/date addDaysKey avance et recule par rapport à aujourd’hui" time="0">
+    </testcase>
+    <testcase classname="utils/date formatShort : No date / Today / Tomorrow / date courte" name="utils/date formatShort : No date / Today / Tomorrow / date courte" time="0">
+    </testcase>
+    <testcase classname="utils/date formatLong : date complète, préfixe Today pour aujourd’hui" name="utils/date formatLong : date complète, préfixe Today pour aujourd’hui" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>
