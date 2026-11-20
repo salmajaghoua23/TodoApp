@@ -43,7 +43,7 @@ stages:
     jobs:
       - job: CI
         displayName: 'Validation de TodoApp'
-
+        timeoutInMinutes: 120
         steps:
 
           # 1. Récupérer le code source
@@ -201,7 +201,7 @@ stages:
                 )
                 
                 # Compiler APK et AAB
-                .\gradlew.bat clean assembleRelease bundleRelease
+                .\gradlew.bat assembleRelease bundleRelease
                 
                 if ($LASTEXITCODE -ne 0) {
                   throw "Compilation Gradle echouee"
