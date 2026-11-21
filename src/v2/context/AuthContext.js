@@ -66,7 +66,9 @@ export function AuthProvider({ children }) {
     }
   };
 
-  initialize();
+  initialize().catch((err) => {
+    console.error('Initialization failed:', err);
+  });
 
   const { data: sub } = supabase.auth.onAuthStateChange(
     (_event, session) => {

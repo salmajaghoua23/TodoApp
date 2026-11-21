@@ -95,8 +95,9 @@ useEffect(() => {
     }
   };
 
-  initialize();
-
+  initialize().catch((err) => {
+     console.error('Initialization failed:', err);
+  });
   return () => {
     active = false;
   };
