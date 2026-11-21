@@ -42,24 +42,46 @@ export function AuthProvider({ children }) {
   const [onboarded, setOnboarded] = useState(false);
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    let alive = true;
-    (async () => {
+
+ useEffect(() => {
+  let alive = true;
+
+  const initialize = async () => {
+    try {
       const ob = await load(KEYS.onboarded, false);
-      const { data } = await supabase.auth.getSession();
+      const { data, error } = await supabase.auth.getSession();
+
+      if (error) throw error;
+
       if (!alive) return;
+
       setOnboarded(!!ob);
       setUser(mapUser(data.session && data.session.user));
-      setReady(true);
-    })();
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(mapUser(session && session.user));
-    });
-    return () => {
-      alive = false;
-      sub.subscription.unsubscribe();
-    };
-  }, []);
+    } catch (error) {
+      console.error('Auth initialization error:', error);
+    } finally {
+      if (alive) {
+        setReady(true);
+      }
+    }
+  };
+
+  initialize();
+
+  const { data: sub } = supabase.auth.onAuthStateChange(
+    (_event, session) => {
+      if (alive) {
+        setUser(mapUser(session && session.user));
+      }
+    },
+  );
+
+  return () => {
+    alive = false;
+    sub.subscription.unsubscribe();
+  };
+ }, []);
+
 
   const finishOnboarding = useCallback(async () => {
     setOnboarded(true);

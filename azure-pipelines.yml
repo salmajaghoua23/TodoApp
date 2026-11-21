@@ -93,7 +93,7 @@ stages:
               cliProjectName: 'TodoApp'
               cliSources: '.'
               extraProperties: |
-                sonar.exclusions=**/node_modules/**,**/android/**,**/ios/**,**/coverage/**,**/*.test.js,**/*.spec.js,**/__tests__/**,**/test-utils/**,**/*.sql
+                sonar.exclusions=**/node_modules/**,**/android/**,**/ios/**,**/coverage/**,**/reports/**,**/*.test.js,**/*.spec.js,**/__tests__/**,**/test-utils/**,**/*.sql
                 sonar.coverage.exclusions=**/supabase.js,**/config.js
                 sonar.javascript.lcov.reportPaths=coverage/lcov.info
           # 5. Installer les dépendances npm

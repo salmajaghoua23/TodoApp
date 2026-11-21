@@ -52,23 +52,56 @@ export function TasksProvider({ children }) {
     setTasks(next);
   }, []);
 
-  const refresh = useCallback(async () => {
-    setError(null);
+
+const refresh = useCallback(async () => {
+  setError(null);
+
+  try {
     const { data, error: err } = await supabase
       .from('tasks')
       .select('*')
       .order('created_at', { ascending: false });
-    if (err) setError(err.message);
-    else apply(data.map(toTask));
-    setLoading(false);
-  }, [apply]);
 
-  useEffect(() => {
-    refresh();
-    load(prefsKey, { notifications: true }).then(p =>
-      setNotificationsState(p.notifications !== false),
-    );
-  }, [refresh, prefsKey]);
+    if (err) {
+      throw new Error(err.message);
+    }
+
+    apply((data || []).map(toTask));
+  } catch (err) {
+    setError(err.message || 'Unable to load tasks.');
+  } finally {
+    setLoading(false);
+  }
+}, [apply]);
+
+
+
+useEffect(() => {
+  let active = true;
+
+  const initialize = async () => {
+    try {
+      await refresh();
+
+      const p = await load(prefsKey, { notifications: true });
+
+      if (active) {
+        setNotificationsState(p.notifications !== false);
+      }
+    } catch (err) {
+      if (active) {
+        setError(err.message || 'Unable to load preferences.');
+      }
+    }
+  };
+
+  initialize();
+
+  return () => {
+    active = false;
+  };
+}, [refresh, prefsKey]);
+
 
   const addTask = useCallback(
     async d => {
@@ -147,13 +180,18 @@ export function TasksProvider({ children }) {
     }
   }, [apply]);
 
-  const setNotifications = useCallback(
-    v => {
-      setNotificationsState(v);
-      save(prefsKey, { notifications: v });
-    },
-    [prefsKey],
-  );
+
+const setNotifications = useCallback(
+  v => {
+    setNotificationsState(v);
+
+    save(prefsKey, { notifications: v }).catch(saveError => {
+      console.error('Saving notification preferences failed:', saveError);
+    });
+  },
+  [prefsKey],
+);
+
 
   const stats = useMemo(() => {
     const done = tasks.filter(t => t.completed).length;
