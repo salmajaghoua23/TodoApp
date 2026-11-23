@@ -130,7 +130,7 @@ stages:
             displayName: 'Publier les résultats des tests'
             inputs:
               testResultsFormat: 'JUnit'
-              testResultsFiles: 'coverage/junit.xml'
+              testResultsFiles: 'reports/junit.xml'
               failTaskOnFailedTests: true
             condition: succeededOrFailed()
 
@@ -143,7 +143,6 @@ stages:
               reportDirectory: '$(Build.SourcesDirectory)/coverage'
               failIfCoverageEmpty: true
             condition: succeededOrFailed()
-
           # 9. Analyse de sécurité des dépendances npm
           - script: npm audit --audit-level=critical
             displayName: 'Vérification des vulnérabilités npm'

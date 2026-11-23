@@ -3,12 +3,10 @@ module.exports = {
   setupFiles: ['<rootDir>/jest.setup.js'],
   testTimeout: 30000,
   collectCoverageFrom: [
-    'src/v2/context/**/*.js',
-    'src/v2/utils/**/*.js',
-    'src/v2/storage.js',
-    'src/v2/screens/AuthScreen.js',
-    'src/v2/screens/SetupScreen.js',
-    'src/v2/AppRoot.js',
+    'src/v2/**/*.js',
+    '!src/v2/**/*.test.js',
+    '!src/v2/**/*.spec.js',
+    '!src/v2/**/__tests__/**',
   ],
   coverageThreshold: {
     global: { statements: 70, functions: 65, lines: 70, branches: 55 },
