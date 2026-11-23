@@ -11,7 +11,32 @@ import { supabase } from '../supabase';
 const AuthContext = createContext(null);
 export const useAuth = () => useContext(AuthContext);
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const isValidEmail = (value) => {
+  if (typeof value !== 'string') return false;
+
+  const email = value.trim();
+
+  if (/\s/.test(email)) return false;
+
+  const atIndex = email.indexOf('@');
+
+  if (
+    atIndex <= 0 ||
+    atIndex !== email.lastIndexOf('@') ||
+    atIndex === email.length - 1
+  ) {
+    return false;
+  }
+
+  const domain = email.slice(atIndex + 1);
+  const labels = domain.split('.');
+
+  return (
+    labels.length >= 2 &&
+    labels.every(label => label.length > 0) &&
+    labels[labels.length - 1].length >= 2
+  );
+};
 
 const mapUser = u =>
   u
@@ -94,7 +119,7 @@ export function AuthProvider({ children }) {
   const signUp = useCallback(async ({ name, email, password }) => {
     const cleanEmail = (email || '').trim().toLowerCase();
     if (!name || !name.trim()) throw new Error('Please enter your name.');
-    if (!EMAIL_RE.test(cleanEmail))
+    if (!isValidEmail(cleanEmail))
       throw new Error('Please enter a valid email address.');
     if (!password || password.length < 6)
       throw new Error('Password must be at least 6 characters.');
@@ -110,7 +135,7 @@ export function AuthProvider({ children }) {
 
   const signIn = useCallback(async ({ email, password }) => {
     const cleanEmail = (email || '').trim().toLowerCase();
-    if (!EMAIL_RE.test(cleanEmail))
+    if (!isValidEmail(cleanEmail))
       throw new Error('Please enter a valid email address.');
     if (!password) throw new Error('Please enter your password.');
     const { error } = await supabase.auth.signInWithPassword({

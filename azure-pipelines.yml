@@ -106,11 +106,24 @@ stages:
 
           # 7. Exécuter les tests unitaires Jest
           # Générer les rapports Cobertura et LCOV
-          - script: >
-              npm test -- --runInBand --coverage --ci
-              --coverageReporters=cobertura
-              --coverageReporters=lcov
-            displayName: 'Exécuter les tests Jest'
+          - script: |
+              npm test -- --runInBand --coverage --ci --coverageReporters=text --coverageReporters=lcov --coverageReporters=cobertura
+            displayName: 'Tests Jest avec couverture'
+
+          # 7a. Vérifier le rapport LCOV
+          - task: PowerShell@2
+            displayName: 'Vérifier rapport LCOV'
+            inputs:
+              targetType: 'inline'
+              script: |
+                $report = "$(Build.SourcesDirectory)\coverage\lcov.info"
+
+                if (!(Test-Path $report)) {
+                  throw "Rapport LCOV introuvable"
+                }
+
+                Write-Host "Rapport LCOV disponible"
+                Write-Host "Taille : $((Get-Item $report).Length) octets"
 
           # 7b. Publier les résultats des tests (junit.xml généré par jest-junit)
           - task: PublishTestResults@2

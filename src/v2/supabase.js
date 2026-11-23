@@ -14,7 +14,18 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
 });
 
 // Rafraîchit le token seulement quand l'app est au premier plan.
+
+
 AppState.addEventListener('change', state => {
-  if (state === 'active') supabase.auth.startAutoRefresh();
-  else supabase.auth.stopAutoRefresh();
+  if (state === 'active') {
+    supabase.auth.startAutoRefresh().catch(error => {
+      console.error('Erreur démarrage auto-refresh:', error);
+    });
+  } else {
+    supabase.auth.stopAutoRefresh().catch(error => {
+      console.error('Erreur arrêt auto-refresh:', error);
+    });
+  }
 });
+
+
