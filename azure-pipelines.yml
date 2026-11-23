@@ -138,8 +138,10 @@ stages:
           - task: PublishCodeCoverageResults@2
             displayName: 'Publier couverture des tests'
             inputs:
-              summaryFileLocation: '$(Build.SourcesDirectory)\coverage\cobertura-coverage.xml'
-              failIfCoverageEmpty: false
+              codeCoverageTool: 'Cobertura'
+              summaryFileLocation: '$(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
+              reportDirectory: '$(Build.SourcesDirectory)/coverage'
+              failIfCoverageEmpty: true
             condition: succeededOrFailed()
 
           # 9. Analyse de sécurité des dépendances npm
